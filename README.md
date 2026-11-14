@@ -20,6 +20,6 @@ docker compose up --build
 
 ## Team
 
-- Your Name
-- Teammate 1
-- Teammate 2
+- Eden Boshy
+- Evyatar Aviel
+- Liem Ben Gay
