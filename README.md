@@ -1,4 +1,4 @@
-\# Smart Parking Dashboard
+# Smart Parking Dashboard
 
 
 
@@ -6,21 +6,21 @@ A Docker Compose project with two services: a dashboard for the security guard a
 
 
 
-!\[Docker CI](https://github.com/<user>/<repo>/actions/workflows/docker-ci.yml/badge.svg)
+![Docker CI](https://github.com/edboshy-prog/smart-parking/actions/workflows/docker-ci.yml/badge.svg)
 
 
 
-\## Services
+## Services
 
 
 
-\- \*\*web-service\*\* (Nginx, port 8080): serves the HTML dashboard
+- \*\*web-service\*\* (Nginx, port 8080): serves the HTML dashboard
 
-\- \*\*storage-service\*\* (Apache, port 8081): serves the car images, stored in a Docker volume
+- \*\*storage-service\*\* (Apache, port 8081): serves the car images, stored in a Docker volume
 
 
 
-\## Run
+## Run
 
 
 
@@ -32,19 +32,19 @@ docker compose up --build
 
 
 
-\- Dashboard: http://localhost:8080
+- Dashboard: http://localhost:8080
 
-\- Image: http://localhost:8081/car1.jpg
-
-
-
-\## Team
+- Image: http://localhost:8081/car1.jpg
 
 
 
-\- Eden Boshy
+## Team
 
-\- Eviatar Aviel
 
-\- Liem Ben Gay
+
+- Eden Boshy
+
+- Eviatar Aviel
+
+- Liem Ben Gay
 
