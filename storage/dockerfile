@@ -1,0 +1,2 @@
+FROM httpd:alpine
+COPY car1.jpg /usr/local/apache2/htdocs/car1.jpg

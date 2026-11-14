@@ -1,0 +1,15 @@
+services:
+  web-service:
+    build: ./web
+    ports:
+      - "8080:80"
+
+  storage-service:
+    build: ./storage
+    ports:
+      - "8081:80"
+    volumes:
+      - car-images:/usr/local/apache2/htdocs
+
+volumes:
+  car-images:
