@@ -1,4 +1,4 @@
-# Smart Parking Dashboard
+# Smart Parking Dashboard project
 
 
 
