@@ -1,12 +1,88 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Parking Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #1a237e;
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .status-badge {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .car-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fafafa;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #1a237e;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #65676b;
+        }
+    </style>
 </head>
 <body>
-    <h1>לוח בקרה - חניון חכם</h1>
-    <p>ברוך הבא, שומר יקר. כאן יופיעו תמונות הרכבים הנכנסים:</p>
-    <img src="http://localhost:8081/car1.jpg" alt="רכב נכנס" style="max-width:400px;">
+
+    <header>
+        <h1>🚘 לוח בקרה - חניון חכם</h1>
+    </header>
+
+    <div class="container">
+        <div class="status-badge">● מצלמת IoT פעילה ומחוברת לשרת Storage</div>
+        <h2>תיעוד כניסת רכב אחרונה</h2>
+        <p>שלום שומר, להלן צילום לוחית הרישוי שנקלטה בשער הכניסה:</p>
+        
+        <div class="car-card">
+            <strong>תמונת מצלמה (שער 1):</strong><br>
+            <img src="http://localhost:8081/car1.jpg" alt="רכב נכנס לחניון">
+        </div>
+
+        <div class="footer">
+            Smart Parking Tracker | מנוהל באמצעות Docker Compose
+        </div>
+    </div>
+
 </body>
 </html>
