@@ -35,6 +35,4 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           docker tag smart-parking-web-service ghcr.io/${{ github.repository_owner }}/smart-parking-web:latest
-          docker tag smart-parking-storage-service ghcr.io/${{ github.repository_owner }}/smart-parking-storage:latest
           docker push ghcr.io/${{ github.repository_owner }}/smart-parking-web:latest
-          docker push ghcr.io/${{ github.repository_owner }}/smart-parking-storage:latest

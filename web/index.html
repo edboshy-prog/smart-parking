@@ -5,34 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Parking Dashboard</title>
     <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #1c1e21;
+            --sub-card-bg: #fafafa;
+            --border-color: #e0e0e0;
+            --header-bg: #1a237e;
+        }
+
+        /* משתני עיצוב למצב לילה (Dark Mode) */
+        body.dark-mode {
+            --bg-color: #121212;
+            --card-bg: #1e1e2e;
+            --text-color: #e4e6eb;
+            --sub-card-bg: #2a2a3c;
+            --border-color: #3a3a4e;
+            --header-bg: #0d1137;
+        }
+
+        /* עיצוב מיוחד כשה-Easter Egg של דוקטור הו מופעל */
+        body.tardis-mode {
+            --header-bg: #003b6f; /* TARDIS Blue */
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #1c1e21;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
+
         header {
-            background-color: #1a237e;
+            background-color: var(--header-bg);
             color: white;
             width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.5s;
         }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
         .container {
             max-width: 800px;
             width: 90%;
-            margin: 30px auto;
-            background: white;
+            margin: 25px auto;
+            background: var(--card-bg);
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             text-align: center;
         }
+
         .status-badge {
             display: inline-block;
             background-color: #e8f5e9;
@@ -41,48 +82,123 @@
             border-radius: 20px;
             font-weight: bold;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
+        /* תיבת ה-Easter Egg שמוסתרת כברירת מחדל */
+        .tardis-alert {
+            display: none;
+            background-color: #003b6f;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #64b5f6;
+            animation: materialize 1.2s ease-in-out;
+        }
+
+        @keyframes materialize {
+            0% { opacity: 0; transform: scale(0.95); }
+            30% { opacity: 0.8; }
+            60% { opacity: 0.3; }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
         .car-card {
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 15px;
-            background-color: #fafafa;
+            background-color: var(--sub-card-bg);
         }
+
         img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            border: 2px solid #1a237e;
+            border: 2px solid var(--header-bg);
             margin-top: 10px;
         }
+
         .footer {
             margin-top: 20px;
             font-size: 13px;
-            color: #65676b;
+            opacity: 0.75;
+        }
+
+        .secret-trigger {
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 5px;
+            opacity: 0.6;
+        }
+
+        .secret-trigger:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🚘 לוח בקרה - חניון חכם</h1>
+        <h1 id="mainTitle">🚘 לוח בקרה - חניון חכם</h1>
+        <button class="theme-btn" onclick="toggleDarkMode()">🌙 מצב לילה</button>
     </header>
 
     <div class="container">
-        <div class="status-badge">● מצלמת IoT פעילה ומחוברת לשרת Storage</div>
+        <div class="status-badge">● מצלמת IoT פעילה (Docker Internal Network)</div>
+
+        <!-- הודעת ה-Easter Egg החבויה -->
+        <div id="tardisBox" class="tardis-alert">
+            <strong>🟦 התראת חריגת זמן-חלל (TARDIS Detected):</strong><br>
+            זוהה רכב מסוג <em>Type 40 Time Capsule</em> חונה בשער 1.<br>
+            <small>אזהרה לשומר: החניון הזה גדול יותר מבפנים! (It's bigger on the inside)</small>
+        </div>
+
         <h2>תיעוד כניסת רכב אחרונה</h2>
         <p>שלום שומר, להלן צילום לוחית הרישוי שנקלטה בשער הכניסה:</p>
         
         <div class="car-card">
-            <strong>תמונת מצלמה (שער 1):</strong><br>
-            <img src="http://localhost:8081/car1.jpg" alt="רכב נכנס לחניון">
+            <strong>תמונת מצלמה (נשלפה דרך Nginx Reverse Proxy):</strong><br>
+            <img src="/car1.jpg" alt="רכב נכנס לחניון">
         </div>
 
         <div class="footer">
             Smart Parking Tracker | מנוהל באמצעות Docker Compose
+            <span class="secret-trigger" onclick="activateTardis()" title="Police Public Call Box">🟦</span>
         </div>
     </div>
+
+    <script>
+        // 1. מעבר בין מצב יום למצב לילה
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.querySelector('.theme-btn');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.textContent = '☀️ מצב יום';
+            } else {
+                btn.textContent = '🌙 מצב לילה';
+            }
+        }
+
+        // 2. הפעלת ה-Easter Egg של Doctor Who
+        function activateTardis() {
+            const box = document.getElementById('tardisBox');
+            const title = document.getElementById('mainTitle');
+            document.body.classList.add('tardis-mode');
+            box.style.display = 'block';
+            title.textContent = '🟦 חניון TARDIS חכם - אדוני הזמן';
+        }
+
+        // האזנה להקלדת המילה "tardis" במקלדת (דרך נוספת להפעיל את ההפתעה!)
+        let typedKeys = '';
+        window.addEventListener('keydown', (e) => {
+            typedKeys += e.key.toLowerCase();
+            if (typedKeys.includes('tardis')) {
+                activateTardis();
+                typedKeys = '';
+            }
+        });
+    </script>
 
 </body>
 </html>

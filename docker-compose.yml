@@ -3,13 +3,18 @@ services:
     build: ./web
     ports:
       - "8080:80"
+    depends_on:
+      - storage-service
+    networks:
+      - parking-network
 
   storage-service:
-    build: ./storage
-    ports:
-      - "8081:80"
+    image: httpd:alpine
     volumes:
-      - car-images:/usr/local/apache2/htdocs
+      - ./storage:/usr/local/apache2/htdocs
+    networks:
+      - parking-network
 
-volumes:
-  car-images:
+networks:
+  parking-network:
+    driver: bridge
